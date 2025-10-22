@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="chestGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B4513;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#654321;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Chest body -->
+  <rect x="30" y="80" width="140" height="80" rx="10" fill="url(#chestGrad)" stroke="#654321" stroke-width="3"/>
+  <!-- Chest lid -->
+  <ellipse cx="100" cy="80" rx="70" ry="25" fill="#8B4513" stroke="#654321" stroke-width="3"/>
+  <!-- Lock -->
+  <circle cx="100" cy="110" r="12" fill="#FFD700" stroke="#DAA520" stroke-width="2"/>
+  <rect x="96" y="110" width="8" height="20" fill="#FFD700"/>
+  <!-- Gems -->
+  <circle cx="80" cy="95" r="6" fill="#9B59B6" opacity="0.8"/>
+  <circle cx="120" cy="95" r="6" fill="#9B59B6" opacity="0.8"/>
+  <circle cx="100" cy="85" r="5" fill="#E74C3C" opacity="0.8"/>
+</svg>
