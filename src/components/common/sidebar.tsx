@@ -122,7 +122,7 @@ export default function Sidebar() {
         { name: "Stakes", path: "/stakes", icon: StakesIcon },
         { name: "Vault", path: "/vault", icon: VaultIcon },
         { name: "Bonds", path: "/bonds", icon: BondsIcon },
-        { name: "Analytics", path: "/analytics", icon: AnalyticsIcon },
+        { name: "LayeredMining", path: "/layered-mining", icon: AnalyticsIcon },
         { name: "IMO", path: "/imo", icon: IMOIcon },
         { name: "More", path: "/more", icon: MoreIcon },
     ];

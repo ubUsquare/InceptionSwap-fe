@@ -65,6 +65,36 @@ export default function PoolsPage() {
               </div>
             </div>
           </div>
+
+        {/* Announcement Banner */}
+        <div className="max-w-4xl mx-auto mb-8">
+          <div 
+            className="rounded-2xl p-6 sm:p-8"
+            style={{
+              background: mounted && theme === 'dark' 
+                ? 'rgba(181, 183, 238, 0.1)' 
+                : 'rgba(92, 105, 204, 0.08)',
+              border: mounted && theme === 'dark'
+                ? '1px solid rgba(181, 183, 238, 0.2)'
+                : '1px solid rgba(92, 105, 204, 0.15)'
+            }}
+          >
+            <div className="space-y-1">
+              <h3 className="text-lg font-semibold" style={{ color: '#5C69CC' }}>
+                Announcement:
+              </h3>
+              <p className="text-sm sm:text-base leading-relaxed" style={{ color: mounted && theme === 'dark' ? 'rgba(181, 183, 238, 0.9)' : 'rgba(92, 105, 204, 0.85)' }}>
+                Nests will be removed and become inactive on May 29th 10:00 A.M. UTC to further reduce the inflation.
+              </p>
+              <p className="text-sm sm:text-base leading-relaxed" style={{ color: mounted && theme === 'dark' ? 'rgba(181, 183, 238, 0.9)' : 'rgba(92, 105, 204, 0.85)' }}>
+                The deactivated nests can be found in the inactive page.
+              </p>
+              <p className="text-sm sm:text-base font-medium leading-relaxed" style={{ color: mounted && theme === 'dark' ? 'rgba(181, 183, 238, 0.9)' : 'rgba(92, 105, 204, 0.85)' }}>
+                Further deposit will be disabled.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </AppLayout>
   );
