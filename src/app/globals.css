@@ -47,3 +47,73 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+.gradient-text2 {
+  background: linear-gradient(90deg, #8F96EC 0%, #13A1CB 100%);
+  -webkit-background-clip: text;
+  background-clip: text; 
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  color: #8F96EC; 
+}
+
+.golden-button {
+  background: linear-gradient(90deg, #743816 14.96%, #E9B546 43.94%, #88471F 97.54%);
+  box-shadow: 3px 6px 6px 0px #E9B54699;
+  display: inline-block; 
+  padding: 10px 30px; 
+  border: none; 
+  cursor: pointer; 
+  font-size: 16px; 
+  font-weight: bold; 
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.5px; 
+  transition: transform 0.2s, box-shadow 0.2s; 
+}
+
+.golden-button:hover {
+  transform: translateY(-2px); 
+  box-shadow: 5px 8px 8px 0px #E9B546CC; 
+}
+
+.golden-button:active {
+  transform: translateY(1px);
+  box-shadow: 1px 3px 3px 0px #743816AA;
+}
+.tab-golden-button{
+    background: linear-gradient(90deg, #743816 14.96%, #E9B546 43.94%, #88471F 97.54%);
+  /* box-shadow: 3px 6px 6px 0px #E9B54699; */
+  display: inline-block; 
+  padding: 10px 30px; 
+  border: none; 
+  cursor: pointer; 
+  font-size: 16px; 
+  font-weight: bold; 
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.5px; 
+  transition: transform 0.2s, box-shadow 0.2s; 
+}
+.tab-white-button{
+  background: transparent;
+  display: inline-block; 
+  padding: 10px 30px; 
+  color: #AF811F;
+  border: none; 
+  cursor: pointer; 
+  font-size: 16px; 
+  font-weight: bold; 
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.5px; 
+  transition: transform 0.2s, box-shadow 0.2s; 
+
+}
+.mine_live_bg{
+  background-image: url("/images/live_minebg.png");
+  background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat;
+  box-shadow: 0px 5px 7px 0px #9396ED87;
+
+}
