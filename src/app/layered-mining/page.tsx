@@ -45,17 +45,17 @@ export default function LayeredMiningPage() {
           <section className="mb-6 lg:mb-6 bg-white dark:bg-gray-800 rounded-lg p-4 sm:p-6 lg:p-8 shadow-sm"
             style={{ backgroundImage: 'url(/images/second.png)', backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}>
 
-            <h1 className="text-[30px] gradient-text2 font-semibold">Layered mining</h1>
-            <p className="text-gray-600 dark:text-gray-300 text-base sm:text-lg font-roboto">
+            <h1 className="text-xl sm:text-2xl lg:text-[30px] gradient-text2 font-semibold">Layered mining</h1>
+            <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base lg:text-lg font-roboto">
               Layered Mining is highly volatile, please do your own research before investing.
             </p>
 
             {/* Layer Selection Dropdown */}
-            <div className="flex items-center justify-between mt-6 max-w-[400px]">
-              <div className="relative">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 mt-6 max-w-full sm:max-w-[400px]">
+              <div className="relative w-full sm:w-auto">
                 <button
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className="flex items-center gap-2 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 text-[#5C69CC] dark:text-white hover:bg-white dark:hover:bg-gray-800 transition-all duration-200 shadow-sm"
+                  className="flex items-center gap-2 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border border-gray-300 dark:border-gray-600 rounded-lg px-3 sm:px-4 py-2 text-[#5C69CC] dark:text-white hover:bg-white dark:hover:bg-gray-800 transition-all duration-200 shadow-sm w-full sm:w-auto text-sm sm:text-base"
                 >
                   <span className="font-medium">{selectedLayer}</span>
                   <svg
@@ -82,42 +82,44 @@ export default function LayeredMiningPage() {
                           : 'text-[#5C69CC] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
                           } ${index === 0 ? 'rounded-t-lg' : ''} ${index === layers.length - 1 ? 'rounded-b-lg' : ''} ${index !== layers.length - 1 ? 'border-b border-gray-100 dark:border-gray-700' : ''}`}
                       >
-                        <span className="font-medium">{layer}</span>
+                        <span className="font-medium text-sm sm:text-base">{layer}</span>
                       </button>
                     ))}
                   </div>
                 )}
               </div>
 
-              <div className="text-right">
-                <span className="text-2xl font-bold text-[#5C69CC] dark:text-white bg-white/90 dark:bg-gray-800/90 px-3 py-1 rounded-lg backdrop-blur-sm  dark:border-gray-600">$0.00</span>
+              <div className="text-left sm:text-right w-full sm:w-auto">
+                <span className="text-xl sm:text-2xl font-bold text-[#5C69CC] dark:text-white bg-white/90 dark:bg-gray-800/90 px-3 py-1 rounded-lg backdrop-blur-sm  dark:border-gray-600 inline-block">$0.00</span>
               </div>
             </div>
           </section>
 
           {/* Tabs */}
-          <nav className="mb-4 flex items-center justify-center">
-            <div role="tablist" aria-label="Main tabs" className="inline-flex gap-3 bg-transparent rounded-full px-2 py-1 border border-[#0000001A]">
-              {['Home', 'Genesis', 'Mines', 'House'].map((tab) => (
-                <button
-                  key={tab}
-                  role="tab"
-                  aria-selected={activeTab === tab}
-                  onClick={() => handleTabClick(tab)}
-                  className={` ${activeTab === tab
-                    ? 'tab-golden-button text-white'
-                    : 'tab-white-button dark:bg-gray-800 text-[#5C69CC] dark:text-gray-300 border border-gray-200 dark:border-gray-700'
-                    } rounded-full`}
-                >
-                  {tab}
-                </button>
-              ))}
+          <nav className="mb-4 w-full">
+            <div className="flex items-center justify-start sm:justify-center overflow-x-auto scrollbar-hide px-2 pb-1">
+              <div role="tablist" aria-label="Main tabs" className="inline-flex gap-2 sm:gap-3 bg-transparent rounded-full px-2 py-1 border border-[#0000001A]">
+                {['Home', 'Genesis', 'Mines', 'House'].map((tab) => (
+                  <button
+                    key={tab}
+                    role="tab"
+                    aria-selected={activeTab === tab}
+                    onClick={() => handleTabClick(tab)}
+                    className={`px-4 py-2 sm:px-5 sm:py-2.5 text-sm sm:text-base ${activeTab === tab
+                      ? 'tab-golden-button text-white'
+                      : 'tab-white-button dark:bg-gray-800 text-[#5C69CC] dark:text-gray-300 border border-gray-200 dark:border-gray-700'
+                      } rounded-full whitespace-nowrap transition-all`}
+                  >
+                    {tab}
+                  </button>
+                ))}
+              </div>
             </div>
           </nav>
 
           {/* GG5 Address Display */}
-          <div className="mb-4 text-center">
-            <p className="text-sm text-[#5C69CC] dark:text-gray-400 font-medium">
+          <div className="mb-4 text-center px-2">
+            <p className="text-xs sm:text-sm text-[#5C69CC] dark:text-gray-400 font-medium break-all">
               GG5 ADDRESS: 0×1A2AfB48F402847aF9f487959c144bd82AfEb303
             </p>
           </div>
@@ -137,37 +139,40 @@ export default function LayeredMiningPage() {
               </div>
 
               {/* Filter Buttons */}
-              <div className="flex items-center justify-center gap-4 mb-6">
-                {/* Toggle Switch - Proper Design */}
-                <button
-                  onClick={() => setIsStakedOnly(!isStakedOnly)}
-                  className={`relative w-14 h-7 rounded-full transition-all duration-300 ${isStakedOnly
-                    ? 'bg-gradient-to-r from-blue-400 to-blue-600'
-                    : 'bg-gray-300 dark:bg-gray-600'
-                    }`}
-                >
-                  <div
-                    className={`absolute top-1 w-5 h-5 bg-white rounded-full shadow-md transition-all duration-300 ${isStakedOnly ? 'right-1' : 'left-1'
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 mb-6 px-2">
+                {/* Toggle Switch & Staked Only - Group them together */}
+                <div className="flex items-center gap-3">
+                  {/* Toggle Switch - Proper Design */}
+                  <button
+                    onClick={() => setIsStakedOnly(!isStakedOnly)}
+                    className={`relative w-14 h-7 rounded-full transition-all duration-300 ${isStakedOnly
+                      ? 'bg-gradient-to-r from-blue-400 to-blue-600'
+                      : 'bg-gray-300 dark:bg-gray-600'
                       }`}
-                  />
-                </button>
+                  >
+                    <div
+                      className={`absolute top-1 w-5 h-5 bg-white rounded-full shadow-md transition-all duration-300 ${isStakedOnly ? 'right-1' : 'left-1'
+                        }`}
+                    />
+                  </button>
 
-                {/* Staked Only Text Button */}
-                <button
-                  onClick={() => setIsStakedOnly(!isStakedOnly)}
-                  className={`px-6 py-2 rounded-full font-medium transition-all ${isStakedOnly
-                    ? "text-[#5C69CC] dark:text-blue-400 font-semibold"
-                    : "text-gray-600 dark:text-gray-400"
-                    }`}
-                >
-                  Staked Only
-                </button>
+                  {/* Staked Only Text Button */}
+                  <button
+                    onClick={() => setIsStakedOnly(!isStakedOnly)}
+                    className={`px-4 sm:px-6 py-2 rounded-full font-medium transition-all text-sm sm:text-base ${isStakedOnly
+                      ? "text-[#5C69CC] dark:text-blue-400 font-semibold"
+                      : "text-gray-600 dark:text-gray-400"
+                      }`}
+                  >
+                    Staked Only
+                  </button>
+                </div>
 
                 {/* Closed Mines Tab */}
-                <div className="py-1 px-2 border border-[#0000001A] rounded-full">
+                <div className="py-1 px-1 sm:px-2 border border-[#0000001A] rounded-full">
                   <button
                     onClick={() => setMineFilter("Closed Mines")}
-                    className={`px-6 py-2 rounded-full font-medium transition-all  ${mineFilter === "Closed Mines"
+                    className={`px-3 sm:px-6 py-2 rounded-full font-medium transition-all text-xs sm:text-base ${mineFilter === "Closed Mines"
                       ? "bg-gradient-to-r from-blue-400 to-cyan-400 text-white scale-105"
                       : " dark:bg-gray-700 text-[#5C69CC] dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600"
                       }`}
@@ -178,7 +183,7 @@ export default function LayeredMiningPage() {
                   {/* Live Mines Tab */}
                   <button
                     onClick={() => setMineFilter("Live Mines")}
-                    className={`px-6 py-2 rounded-full font-medium transition-all  ${mineFilter === "Live Mines"
+                    className={`px-3 sm:px-6 py-2 rounded-full font-medium transition-all text-xs sm:text-base ${mineFilter === "Live Mines"
                       ? "bg-gradient-to-r from-blue-400 to-cyan-400 text-white scale-105"
                       : " dark:bg-gray-700 text-[#5C69CC] dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600"
                       }`}
@@ -190,35 +195,35 @@ export default function LayeredMiningPage() {
 
               {/* Mine Card - Single for Genesis - Only show when Live Mines is selected */}
               {mineFilter === "Live Mines" ? (
-                <div className="max-w-sm mx-auto">
-                  <div className="dark:from-gray-800 dark:to-gray-700 rounded-[20px] p-6 shadow-lg relative overflow-hidden mine_live_bg">
-                    <div className="absolute top-4 left-4 w-36 h-36">
+                <div className="max-w-sm mx-auto px-2">
+                  <div className="dark:from-gray-800 dark:to-gray-700 rounded-[20px] p-4 sm:p-6 shadow-lg relative overflow-hidden mine_live_bg">
+                    <div className="absolute top-4 left-4 w-24 h-24 sm:w-36 sm:h-36">
                       <Image src="/images/icon.png" alt="Key" width={100} height={100} className="object-contain" />
                     </div>
                     {/* Top Right - KEY Badge */}
                     <div className="absolute top-4 right-4">
                       <div className=" flex flex-col">
-                        <span className="font-bold text-sm" style={{ color: "#5C69CC" }}>KEY</span>
+                        <span className="font-bold text-xs sm:text-sm" style={{ color: "#5C69CC" }}>KEY</span>
                         <span className="text-white text-[10px] px-2 py-0.5 rounded-full font-bold" style={{ background: "linear-gradient(100.78deg, #5C69CC 12.11%, #13A1CB 96.61%)" }}>
                           3X</span>
                       </div>
                     </div>
 
-                    <div className="space-y-3 mt-16">
+                    <div className="space-y-3 mt-12 sm:mt-16">
 
                       {/* Stack & Earn */}
                       <div className="space-y-1 mb-4">
                         <div className="flex justify-between text-xs">
-                          <span className="font-medium text-lg" style={{ color: "#7B8CDE" }}>APR:</span>
-                          <span className="font-bold text-lg" style={{ color: "#5C69CC" }}>0.00%</span>
+                          <span className="font-medium text-sm sm:text-lg" style={{ color: "#7B8CDE" }}>APR:</span>
+                          <span className="font-bold text-sm sm:text-lg" style={{ color: "#5C69CC" }}>0.00%</span>
                         </div>
                         <div className="flex justify-between text-xs">
-                          <span className="font-medium text-lg" style={{ color: "#7B8CDE" }}>Stack:</span>
-                          <span className="font-bold text-lg" style={{ color: "#5C69CC" }}>KEYS</span>
+                          <span className="font-medium text-sm sm:text-lg" style={{ color: "#7B8CDE" }}>Stack:</span>
+                          <span className="font-bold text-sm sm:text-lg" style={{ color: "#5C69CC" }}>KEYS</span>
                         </div>
                         <div className="flex justify-between text-xs">
-                          <span className="font-medium text-lg" style={{ color: "#7B8CDE" }}>Earn:</span>
-                          <span className="font-bold text-lg" style={{ color: "#5C69CC" }}>GKEY</span>
+                          <span className="font-medium text-sm sm:text-lg" style={{ color: "#7B8CDE" }}>Earn:</span>
+                          <span className="font-bold text-sm sm:text-lg" style={{ color: "#5C69CC" }}>GKEY</span>
                         </div>
                       </div>
 
@@ -226,18 +231,18 @@ export default function LayeredMiningPage() {
                       {/* Deposit Fee Section */}
                       <div className="mb-3">
                         <div className="flex justify-between items-center mb-1">
-                          <span className="font-semibold text-lg block" style={{ color: "#5C69CC" }}>Deposit Fee:</span>
-                          <span className="font-bold text-lg block" style={{ color: "#5C69CC" }}>2%</span>
+                          <span className="font-semibold text-sm sm:text-lg block" style={{ color: "#5C69CC" }}>Deposit Fee:</span>
+                          <span className="font-bold text-sm sm:text-lg block" style={{ color: "#5C69CC" }}>2%</span>
                         </div>
                       </div>
 
                       {/* Keys Earned Section */}
                       <div className="mb-3">
-                        <div className="text-[16px] font-normal mb-1" style={{ color: "#5C69CC" }}>KEYS EARNED</div>
+                        <div className="text-sm sm:text-[16px] font-normal mb-1" style={{ color: "#5C69CC" }}>KEYS EARNED</div>
                         <div className="flex items-center justify-between">
-                          <span className="font-bold text-2xl" style={{ color: "#7B8CDE" }}>0</span>
+                          <span className="font-bold text-xl sm:text-2xl" style={{ color: "#7B8CDE" }}>0</span>
                           <button
-                            className="px-5 py-1 rounded-lg text-white text-xs font-medium transition-all hover:opacity-90"
+                            className="px-4 sm:px-5 py-1 rounded-lg text-white text-xs font-medium transition-all hover:opacity-90"
                             style={{ background: "linear-gradient(93.96deg, rgba(147, 150, 237, 0.4) 2.58%, rgba(13, 161, 202, 0.4) 99.26%)" }}
                           >
                             Harvest
@@ -246,7 +251,7 @@ export default function LayeredMiningPage() {
                       </div>
 
                       {/* LP Stacked Badge */}
-                      <div className="text-[14px] font-semibold mb-3" style={{ color: "#5C69CC" }}>KEY–BUSD LP STACKED</div>
+                      <div className="text-xs sm:text-[14px] font-semibold mb-3" style={{ color: "#5C69CC" }}>KEY–BUSD LP STACKED</div>
 
 
                       {/* Unlock Wallet Button */}
@@ -290,37 +295,40 @@ export default function LayeredMiningPage() {
                 </p>
               </div>
               {/* Filter Buttons */}
-              <div className="flex items-center justify-center gap-4 mb-6">
-                {/* Toggle Switch - Proper Design */}
-                <button
-                  onClick={() => setIsStakedOnly(!isStakedOnly)}
-                  className={`relative w-14 h-7 rounded-full transition-all duration-300 ${isStakedOnly
-                    ? 'bg-gradient-to-r from-blue-400 to-blue-600'
-                    : 'bg-gray-300 dark:bg-gray-600'
-                    }`}
-                >
-                  <div
-                    className={`absolute top-1 w-5 h-5 bg-white rounded-full shadow-md transition-all duration-300 ${isStakedOnly ? 'right-1' : 'left-1'
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 mb-6 px-2">
+                {/* Toggle Switch & Staked Only - Group them together */}
+                <div className="flex items-center gap-3">
+                  {/* Toggle Switch - Proper Design */}
+                  <button
+                    onClick={() => setIsStakedOnly(!isStakedOnly)}
+                    className={`relative w-14 h-7 rounded-full transition-all duration-300 ${isStakedOnly
+                      ? 'bg-gradient-to-r from-blue-400 to-blue-600'
+                      : 'bg-gray-300 dark:bg-gray-600'
                       }`}
-                  />
-                </button>
+                  >
+                    <div
+                      className={`absolute top-1 w-5 h-5 bg-white rounded-full shadow-md transition-all duration-300 ${isStakedOnly ? 'right-1' : 'left-1'
+                        }`}
+                    />
+                  </button>
 
-                {/* Staked Only Text Button */}
-                <button
-                  onClick={() => setIsStakedOnly(!isStakedOnly)}
-                  className={`px-6 py-2 rounded-full font-medium transition-all ${isStakedOnly
-                    ? "text-[#5C69CC] dark:text-blue-400 font-semibold"
-                    : "text-gray-600 dark:text-gray-400"
-                    }`}
-                >
-                  Staked Only
-                </button>
+                  {/* Staked Only Text Button */}
+                  <button
+                    onClick={() => setIsStakedOnly(!isStakedOnly)}
+                    className={`px-4 sm:px-6 py-2 rounded-full font-medium transition-all text-sm sm:text-base ${isStakedOnly
+                      ? "text-[#5C69CC] dark:text-blue-400 font-semibold"
+                      : "text-gray-600 dark:text-gray-400"
+                      }`}
+                  >
+                    Staked Only
+                  </button>
+                </div>
 
                 {/* Closed Mines Tab */}
-                <div className="py-1 px-2 border border-[#0000001A] rounded-full">
+                <div className="py-1 px-1 sm:px-2 border border-[#0000001A] rounded-full">
                   <button
                     onClick={() => setMineFilter("Closed Mines")}
-                    className={`px-6 py-2 rounded-full font-medium transition-all  ${mineFilter === "Closed Mines"
+                    className={`px-3 sm:px-6 py-2 rounded-full font-medium transition-all text-xs sm:text-base ${mineFilter === "Closed Mines"
                       ? "bg-gradient-to-r from-blue-400 to-cyan-400 text-white scale-105"
                       : " dark:bg-gray-700 text-[#5C69CC] dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600"
                       }`}
@@ -331,7 +339,7 @@ export default function LayeredMiningPage() {
                   {/* Live Mines Tab */}
                   <button
                     onClick={() => setMineFilter("Live Mines")}
-                    className={`px-6 py-2 rounded-full font-medium transition-all  ${mineFilter === "Live Mines"
+                    className={`px-3 sm:px-6 py-2 rounded-full font-medium transition-all text-xs sm:text-base ${mineFilter === "Live Mines"
                       ? "bg-gradient-to-r from-blue-400 to-cyan-400 text-white scale-105"
                       : " dark:bg-gray-700 text-[#5C69CC] dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600"
                       }`}
@@ -343,20 +351,20 @@ export default function LayeredMiningPage() {
 
               {/* Mines Grid - Only show when Live Mines is selected */}
               {mineFilter === "Live Mines" ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 px-2">
                   {minesData.map((mine) => (
                     <div
                       key={mine.id}
-                      className="dark:from-gray-800 dark:to-gray-700 rounded-[20px] p-6 shadow-lg relative overflow-hidden mine_live_bg"
+                      className="dark:from-gray-800 dark:to-gray-700 rounded-[20px] p-4 sm:p-6 shadow-lg relative overflow-hidden mine_live_bg"
                     >
                       {/* Top Left - Icon */}
-                      <div className="absolute top-4 left-4 w-36 h-36">
+                      <div className="absolute top-4 left-4 w-24 h-24 sm:w-36 sm:h-36">
                         <Image src="/images/icon.png" alt="Key" width={100} height={100} className="object-contain" />
                       </div>
                       {/* Top Right - Pair Name & Badge */}
                       <div className="absolute top-4 right-4">
                         <div className="flex flex-col items-end gap-1">
-                          <span className="font-bold text-sm" style={{ color: "#5C69CC" }}>{mine.name}</span>
+                          <span className="font-bold text-xs sm:text-sm" style={{ color: "#5C69CC" }}>{mine.name}</span>
                           <div className="flex items-center gap-2">
                             {mine.noFees && (
                               <span className="text-[#4CAF50] text-[10px] px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
@@ -373,38 +381,38 @@ export default function LayeredMiningPage() {
                         </div>
                       </div>
 
-                      <div className="space-y-3 mt-16">
+                      <div className="space-y-3 mt-12 sm:mt-16">
                         {/* APR, Stack & Earn */}
                         <div className="space-y-1 mb-4">
                           <div className="flex justify-between text-xs">
-                            <span className="font-medium text-lg" style={{ color: "#7B8CDE" }}>APR:</span>
-                            <span className="font-bold text-lg" style={{ color: "#5C69CC" }}>{mine.apr}</span>
+                            <span className="font-medium text-sm sm:text-lg" style={{ color: "#7B8CDE" }}>APR:</span>
+                            <span className="font-bold text-sm sm:text-lg" style={{ color: "#5C69CC" }}>{mine.apr}</span>
                           </div>
                           <div className="flex justify-between text-xs">
-                            <span className="font-medium text-lg" style={{ color: "#7B8CDE" }}>Stack:</span>
-                            <span className="font-bold text-lg" style={{ color: "#5C69CC" }}>{mine.staked}</span>
+                            <span className="font-medium text-sm sm:text-lg" style={{ color: "#7B8CDE" }}>Stack:</span>
+                            <span className="font-bold text-sm sm:text-lg" style={{ color: "#5C69CC" }}>{mine.staked}</span>
                           </div>
                           <div className="flex justify-between text-xs">
-                            <span className="font-medium text-lg" style={{ color: "#7B8CDE" }}>Earn:</span>
-                            <span className="font-bold text-lg" style={{ color: "#5C69CC" }}>{mine.earned}</span>
+                            <span className="font-medium text-sm sm:text-lg" style={{ color: "#7B8CDE" }}>Earn:</span>
+                            <span className="font-bold text-sm sm:text-lg" style={{ color: "#5C69CC" }}>{mine.earned}</span>
                           </div>
                         </div>
 
                         {/* Deposit Fee Section */}
                         <div className="mb-3">
                           <div className="flex justify-between items-center mb-1">
-                            <span className="font-semibold text-lg block" style={{ color: "#5C69CC" }}>Deposit Fee:</span>
-                            <span className="font-bold text-lg block" style={{ color: "#5C69CC" }}>{mine.depositFee}</span>
+                            <span className="font-semibold text-sm sm:text-lg block" style={{ color: "#5C69CC" }}>Deposit Fee:</span>
+                            <span className="font-bold text-sm sm:text-lg block" style={{ color: "#5C69CC" }}>{mine.depositFee}</span>
                           </div>
                         </div>
 
                         {/* Keys Earned Section */}
                         <div className="mb-3">
-                          <div className="text-[16px] font-normal mb-1" style={{ color: "#5C69CC" }}>KEYS EARNED</div>
+                          <div className="text-sm sm:text-[16px] font-normal mb-1" style={{ color: "#5C69CC" }}>KEYS EARNED</div>
                           <div className="flex items-center justify-between">
-                            <span className="font-bold text-2xl" style={{ color: "#7B8CDE" }}>0</span>
+                            <span className="font-bold text-xl sm:text-2xl" style={{ color: "#7B8CDE" }}>0</span>
                             <button
-                              className="px-5 py-1 rounded-lg text-white text-xs font-medium transition-all hover:opacity-90"
+                              className="px-4 sm:px-5 py-1 rounded-lg text-white text-xs font-medium transition-all hover:opacity-90"
                               style={{ background: "linear-gradient(93.96deg, rgba(147, 150, 237, 0.4) 2.58%, rgba(13, 161, 202, 0.4) 99.26%)" }}
                             >
                               Harvest
@@ -413,7 +421,7 @@ export default function LayeredMiningPage() {
                         </div>
 
                         {/* LP Stacked Badge */}
-                        <div className="text-[14px] font-semibold mb-3" style={{ color: "#5C69CC" }}>{mine.name} STACKED</div>
+                        <div className="text-xs sm:text-[14px] font-semibold mb-3" style={{ color: "#5C69CC" }}>{mine.name} STACKED</div>
 
                         {/* Unlock Wallet Button */}
                         <button className="w-full golden-button text-white rounded-full py-3 font-semibold shadow-lg cursor-pointer">
@@ -456,17 +464,17 @@ export default function LayeredMiningPage() {
                   <div className="min-h-[235px] flex flex-col sm:flex-row items-center justify-between relative overflow-hidden"
                     style={{ backgroundImage: 'url(/images/lock_bg2.png)', backgroundPosition: 'bottom left', backgroundSize: 'contain', backgroundRepeat: 'no-repeat' }}>
                     {/* Mobile: Stack vertically, Desktop: Push content right */}
-                    <div className="flex-1 space-y-3 sm:space-y-4 w-full sm:w-auto sm:px-0 sm:ml-[285px] py-4 sm:py-0">
+                    <div className="flex-1 space-y-3 sm:space-y-4 w-full sm:w-auto px-0 sm:ml-[285px] py-4 sm:py-0">
                       <div className="flex justify-between items-center p-3 bg-[#F7FAFC] dark:bg-gray-700 rounded-lg">
-                        <span className="text-sm sm:text-base text-[#5C69CC] dark:text-gray-300 font-inter">Coins in Mine</span>
-                        <span className="font-semibold text-[#5C69CC] dark:text-white text-[14px] font-inter">LOCKED</span>
+                        <span className="text-xs sm:text-sm md:text-base text-[#5C69CC] dark:text-gray-300 font-inter">Coins in Mine</span>
+                        <span className="font-semibold text-[#5C69CC] dark:text-white text-xs sm:text-[14px] font-inter">LOCKED</span>
                       </div>
                       <div className="flex justify-between items-center p-3 bg-[#F7FAFC] dark:bg-gray-700 rounded-lg">
-                        <span className="text-sm sm:text-base text-[#5C69CC] dark:text-gray-300 font-inter">Coins in Wallet</span>
-                        <span className="font-semibold text-[#5C69CC] dark:text-white text-[14px] font-inter">$0.00</span>
+                        <span className="text-xs sm:text-sm md:text-base text-[#5C69CC] dark:text-gray-300 font-inter">Coins in Wallet</span>
+                        <span className="font-semibold text-[#5C69CC] dark:text-white text-xs sm:text-[14px] font-inter">$0.00</span>
                       </div>
                       <div className="text-center">
-                        <button className="golden-button text-white rounded-full">Unlock Wallet</button>
+                        <button className="golden-button text-white rounded-full text-sm sm:text-base">Unlock Wallet</button>
 
                       </div>
 
@@ -482,19 +490,19 @@ export default function LayeredMiningPage() {
                   <div className="space-y-2">
                     <div className="border-b border-gray-200 dark:border-gray-700 pb-2">
 
-                      <p className="text-sm text-[#5C69CC] dark:text-gray-400 font-inter mb-1">
+                      <p className="text-xs sm:text-sm text-[#5C69CC] dark:text-gray-400 font-inter mb-1">
                         In Current Layer
                       </p>
-                      <h3 className="font-semibold text-[#5C69CC] dark:text-white font-inter text-[25px]">
+                      <h3 className="font-semibold text-[#5C69CC] dark:text-white font-inter text-xl sm:text-[25px]">
                         $3,380.14
                       </h3>
                     </div>
 
                     <div className="pb-2">
-                      <p className="text-sm text-[#5C69CC] dark:text-gray-400 font-inter">
+                      <p className="text-xs sm:text-sm text-[#5C69CC] dark:text-gray-400 font-inter">
                         Across all Layers
                       </p>
-                      <h3 className="font-semibold text-[#5C69CC] dark:text-white mb-1 font-inter text-[25px]">
+                      <h3 className="font-semibold text-[#5C69CC] dark:text-white mb-1 font-inter text-xl sm:text-[25px]">
                         $317,307.33
                       </h3>
                     </div>
@@ -508,28 +516,28 @@ export default function LayeredMiningPage() {
                   GKEYS Stats
                 </h2>
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
                   <div>
                     <p className="text-xs sm:text-sm text-[#878787] dark:text-gray-400 mb-1 sm:mb-2">Market Cap</p>
-                    <p className="text-lg sm:text-xl lg:text-2xl font-bold text-[#5C69CC] dark:text-white">
+                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-[#5C69CC] dark:text-white">
                       $1.2M
                     </p>
                   </div>
                   <div>
                     <p className="text-xs sm:text-sm text-[#878787] dark:text-gray-400 mb-1 sm:mb-2">Total Minted</p>
-                    <p className="text-lg sm:text-xl lg:text-2xl font-bold text-[#5C69CC] dark:text-white">
+                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-[#5C69CC] dark:text-white">
                       321M
                     </p>
                   </div>
                   <div>
                     <p className="text-xs sm:text-sm text-[#878787] dark:text-gray-400 mb-1 sm:mb-2">Total Burned</p>
-                    <p className="text-lg sm:text-xl lg:text-2xl font-bold text-[#5C69CC] dark:text-white">
+                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-[#5C69CC] dark:text-white">
                       42M
                     </p>
                   </div>
                   <div>
                     <p className="text-xs sm:text-sm text-[#878787] dark:text-gray-400 mb-1 sm:mb-2">Circulating Supply</p>
-                    <p className="text-lg sm:text-xl lg:text-2xl font-bold text-[#5C69CC] dark:text-white">
+                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-[#5C69CC] dark:text-white">
                       123M
                     </p>
                   </div>
