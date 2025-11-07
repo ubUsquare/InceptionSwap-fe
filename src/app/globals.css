@@ -126,5 +126,14 @@ body {
   background-position: top;
   background-repeat: no-repeat;
   box-shadow: 0px 5px 7px 0px #9396ED87;
+}
 
+.dark .mine_live_bg{
+  background-image: url("/images/dark_live_minebg.png");
+}
+/* Ensure all text inside the live mine card is white in dark mode
+   This overrides inline styles inside the card so the dark design
+   remains readable. */
+.dark .mine_live_bg * {
+  color: #ffffff !important;
 }

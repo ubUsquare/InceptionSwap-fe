@@ -3,14 +3,21 @@
 import AppLayout from "@/components/common/app-layout";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
 
 export default function LayeredMiningPage() {
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [selectedLayer, setSelectedLayer] = useState("Layer 1");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("Home");
   const [mineFilter, setMineFilter] = useState("Live Mines"); // For Genesis/Mines tabs
   const [isStakedOnly, setIsStakedOnly] = useState(false); // Toggle switch state
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const layers = ["Layer 1", "Layer 2", "Layer 3", "Layer 4", "Layer 5"];
 
