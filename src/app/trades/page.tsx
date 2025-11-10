@@ -27,6 +27,14 @@ export default function TradesPage() {
   const [showSettings, setShowSettings] = useState(false);
   const [slippageTolerance, setSlippageTolerance] = useState("0.1");
   const [transactionDeadline, setTransactionDeadline] = useState("0.1");
+  const [showAddLiquidity, setShowAddLiquidity] = useState(false);
+  const [liquidityToken1, setLiquidityToken1] = useState(tokens[0]);
+  const [liquidityToken2, setLiquidityToken2] = useState<typeof tokens[0] | null>(null);
+  const [liquidityAmount1, setLiquidityAmount1] = useState("");
+  const [liquidityAmount2, setLiquidityAmount2] = useState("");
+  const [showLiquidityDropdown1, setShowLiquidityDropdown1] = useState(false);
+  const [showLiquidityDropdown2, setShowLiquidityDropdown2] = useState(false);
+  const [showLiquidityInfo, setShowLiquidityInfo] = useState(false);
 
   const handleFromTokenSelect = (token: typeof tokens[0]) => {
     setFromToken(token);
@@ -349,34 +357,214 @@ export default function TradesPage() {
                 </div>
               </div>
 
-              {/* Add Liquidity Button */}
-              <button className="w-full text-white font-semibold py-4 rounded-full transition-all text-base shadow-lg hover:shadow-xl font-roboto mb-8" style={{background: "linear-gradient(93.96deg, #9396ED 2.58%, #0DA1CA 99.26%)"}}>
-                Add Liquidity
-              </button>
+              {/* Add Liquidity Button - Only show when form is hidden */}
+              {!showAddLiquidity && (
+                <button 
+                  onClick={() => setShowAddLiquidity(true)}
+                  className="w-full text-white font-semibold py-4 rounded-full transition-all text-base shadow-lg hover:shadow-xl font-roboto mb-8" 
+                  style={{background: "linear-gradient(93.96deg, #9396ED 2.58%, #0DA1CA 99.26%)"}}
+                >
+                  Add Liquidity
+                </button>
+              )}
 
-              {/* Your Liquidity Section */}
-              <div className="mb-6">
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-xl font-bold text-[#6B7FED] dark:text-[#6B7FED] font-roboto">
-                    Your Liquidity
-                  </h3>
-                  <button className="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-all">
-                    <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
+              {/* Add Liquidity Form */}
+              {showAddLiquidity && (
+                <div className="mb-8 relative">
+                  <div className="flex items-start justify-between mb-6">
+                    <h3 className="text-xl font-bold text-[#6B7FED] dark:text-[#8B9BFF] font-roboto">
+                      Add Liquidity
+                    </h3>
+                    <div className="flex items-center gap-2">
+                      <button 
+                        onClick={() => setShowLiquidityInfo(!showLiquidityInfo)}
+                        className="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-all relative"
+                      >
+                        <svg className="w-5 h-5 text-[#6B7FED]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </button>
+                      <button 
+                        onClick={() => setShowAddLiquidity(false)}
+                        className="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-all"
+                      >
+                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Info Popup */}
+                  {showLiquidityInfo && (
+                    <>
+                      {/* Backdrop */}
+                      <div 
+                        className="fixed inset-0 z-40" 
+                        onClick={() => setShowLiquidityInfo(false)}
+                      />
+                      {/* Info Box */}
+                      <div className="absolute top-12 right-0 z-50 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-6 max-w-sm w-full border border-gray-200 dark:border-gray-700">
+                        <p className="text-[#6B7FED] dark:text-[#8B9BFF] text-sm leading-relaxed font-inter">
+                          When you add liquidity, you are given pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time.
+                        </p>
+                      </div>
+                    </>
+                  )}
+
+                  <div className="h-px bg-gray-200 dark:bg-gray-700 mb-6"></div>
+
+                  {/* Token 1 Input */}
+                  <div className="mb-4">
+                    <div className="bg-gray-50 dark:bg-gray-700/30 rounded-2xl p-4">
+                      <div className="flex justify-between items-center gap-3">
+                        <input
+                          type="text"
+                          value={liquidityAmount1}
+                          onChange={(e) => setLiquidityAmount1(e.target.value)}
+                          placeholder="0.00"
+                          className="bg-transparent text-3xl font-semibold outline-none text-[#6B7FED] dark:text-[#8B9BFF] w-full font-roboto"
+                        />
+                        <div className="relative">
+                          <button
+                            onClick={() => setShowLiquidityDropdown1(!showLiquidityDropdown1)}
+                            className="flex items-center gap-2 bg-white dark:bg-gray-600 px-4 py-2.5 rounded-xl font-semibold hover:bg-gray-100 dark:hover:bg-gray-500 transition-all shadow-sm min-w-[130px] justify-between font-roboto"
+                          >
+                            <div className="flex items-center gap-2">
+                              <span className="text-2xl">{liquidityToken1.icon}</span>
+                              <span className="text-[#6B7FED] dark:text-white">{liquidityToken1.symbol}</span>
+                            </div>
+                            <svg className="w-4 h-4 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                          </button>
+                          
+                          {showLiquidityDropdown1 && (
+                            <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-700 rounded-xl shadow-2xl z-50 max-h-80 overflow-y-auto border border-gray-200 dark:border-gray-600">
+                              <div className="p-2">
+                                {tokens.map((token) => (
+                                  <button
+                                    key={token.symbol}
+                                    onClick={() => {
+                                      setLiquidityToken1(token);
+                                      setShowLiquidityDropdown1(false);
+                                    }}
+                                    className="w-full flex items-center gap-3 p-3 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg transition-all"
+                                  >
+                                    <span className="text-2xl">{token.icon}</span>
+                                    <div className="text-left">
+                                      <div className="font-semibold text-gray-900 dark:text-white font-roboto">{token.symbol}</div>
+                                      <div className="text-xs text-gray-500 dark:text-gray-400 font-inter">{token.name}</div>
+                                    </div>
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Plus Icon */}
+                  <div className="flex justify-center my-3">
+                    <div className="bg-gray-100 dark:bg-gray-700/50 p-2 rounded-xl">
+                      <svg className="w-5 h-5 text-[#6B7FED] dark:text-[#8B9BFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* Token 2 Input */}
+                  <div className="mb-6">
+                    <div className="bg-gray-50 dark:bg-gray-700/30 rounded-2xl p-4">
+                      <div className="flex justify-between items-center gap-3">
+                        <input
+                          type="text"
+                          value={liquidityAmount2}
+                          onChange={(e) => setLiquidityAmount2(e.target.value)}
+                          placeholder="0.00"
+                          className="bg-transparent text-3xl font-semibold outline-none text-[#6B7FED] dark:text-[#8B9BFF] w-full font-roboto"
+                        />
+                        <div className="relative">
+                          <button
+                            onClick={() => setShowLiquidityDropdown2(!showLiquidityDropdown2)}
+                            className="flex items-center gap-2 bg-white dark:bg-gray-600 px-4 py-2.5 rounded-xl font-semibold hover:bg-gray-100 dark:hover:bg-gray-500 transition-all shadow-sm min-w-[180px] justify-between font-roboto"
+                          >
+                            <span className="text-[#6B7FED] dark:text-white text-nowrap">
+                              {liquidityToken2 ? (
+                                <div className="flex items-center gap-2">
+                                  <span className="text-2xl">{liquidityToken2.icon}</span>
+                                  <span>{liquidityToken2.symbol}</span>
+                                </div>
+                              ) : (
+                                "Select a currency"
+                              )}
+                            </span>
+                            <svg className="w-4 h-4 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                          </button>
+
+                          {showLiquidityDropdown2 && (
+                            <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-700 rounded-xl shadow-2xl z-50 max-h-80 overflow-y-auto border border-gray-200 dark:border-gray-600">
+                              <div className="p-2">
+                                {tokens.filter(t => t.symbol !== liquidityToken1.symbol).map((token) => (
+                                  <button
+                                    key={token.symbol}
+                                    onClick={() => {
+                                      setLiquidityToken2(token);
+                                      setShowLiquidityDropdown2(false);
+                                    }}
+                                    className="w-full flex items-center gap-3 p-3 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg transition-all"
+                                  >
+                                    <span className="text-2xl">{token.icon}</span>
+                                    <div className="text-left">
+                                      <div className="font-semibold text-gray-900 dark:text-white font-roboto">{token.symbol}</div>
+                                      <div className="text-xs text-gray-500 dark:text-gray-400 font-inter">{token.name}</div>
+                                    </div>
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Unlock Wallet Button */}
+                  <button className="w-full text-white font-semibold py-4 rounded-full transition-all text-base shadow-lg hover:shadow-xl font-roboto" style={{background: "linear-gradient(93.96deg, #9396ED 2.58%, #0DA1CA 99.26%)"}}>
+                    Unlock Wallet
                   </button>
                 </div>
+              )}
 
-                {/* Connect Wallet Message */}
-                <div className="text-center py-8">
-                  <button className="w-full max-w-xl mx-auto text-white font-medium py-4 px-8 rounded-full transition-all text-base shadow-lg hover:shadow-xl font-roboto mb-4" style={{background: "linear-gradient(93.96deg, #9396ED 2.58%, #0DA1CA 99.26%)"}}>
-                    Connect to a wallet to view your liquidity.
-                  </button>
-                  <p className="text-sm text-[#6B7FED] dark:text-[#6B7FED] font-inter">
-                    Or, if you staked your LP tokens in a farm, unstake them to see them here.
-                  </p>
+              {/* Your Liquidity Section - Only show when form is hidden */}
+              {!showAddLiquidity && (
+                <div className="mb-6">
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-xl font-bold text-[#6B7FED] dark:text-[#6B7FED] font-roboto">
+                      Your Liquidity
+                    </h3>
+                    <button className="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-all">
+                      <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  {/* Connect Wallet Message */}
+                  <div className="text-center py-8">
+                    <button className="w-full max-w-xl mx-auto text-white font-medium py-4 px-8 rounded-full transition-all text-base shadow-lg hover:shadow-xl font-roboto mb-4" style={{background: "linear-gradient(93.96deg, #9396ED 2.58%, #0DA1CA 99.26%)"}}>
+                      Connect to a wallet to view your liquidity.
+                    </button>
+                    <p className="text-sm text-[#6B7FED] dark:text-[#6B7FED] font-inter">
+                      Or, if you staked your LP tokens in a farm, unstake them to see them here.
+                    </p>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           )}
 
