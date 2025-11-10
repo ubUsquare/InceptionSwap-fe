@@ -14,6 +14,7 @@ export default function LayeredMiningPage() {
   const [activeTab, setActiveTab] = useState("Home");
   const [mineFilter, setMineFilter] = useState("Live Mines"); // For Genesis/Mines tabs
   const [isStakedOnly, setIsStakedOnly] = useState(false); // Toggle switch state
+  
 
   useEffect(() => {
     setMounted(true);
@@ -43,6 +44,13 @@ export default function LayeredMiningPage() {
     setActiveTab(tab);
   };
 
+    useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Background image based on theme
+  const bgImage = mounted && theme === 'dark' ? 'url(/images/dark_key.png)' : 'url(/images/second.png)';
+
   return (
     <AppLayout>
       <div className="p-4 sm:p-6 lg:p-6 relative" >
@@ -50,7 +58,7 @@ export default function LayeredMiningPage() {
         {/* Hero Section */}
         <div className="relative z-10 h-100">
           <section className="mb-6 lg:mb-6 bg-white dark:bg-gray-800 rounded-lg p-4 sm:p-6 lg:p-8 shadow-sm"
-            style={{ backgroundImage: 'url(/images/second.png)', backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}>
+            style={{ backgroundImage: bgImage , backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}>
 
             <h1 className="text-xl sm:text-2xl lg:text-[30px] gradient-text2 font-semibold">Layered mining</h1>
             <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base lg:text-lg font-roboto">

@@ -2,19 +2,29 @@
 
 import AppLayout from "@/components/common/app-layout";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { useTheme } from "next-themes";
 
 export default function IMOPage() {
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [activeTab, setActiveTab] = useState<"next" | "past">("next");
   const [showDetails, setShowDetails] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Background image based on theme
+  const bgImage = mounted && theme === 'dark' ? 'url(/images/dark_key.png)' : 'url(/images/second.png)';
 
   return (
     <AppLayout>
       <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
         {/* Header Section */}
            <section className="mb-6 lg:mb-6 bg-white dark:bg-gray-800 rounded-xl p-4 sm:p-6 lg:p-8 shadow-sm"
-            style={{ backgroundImage: 'url(/images/second.png)', backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}>
+            style={{ backgroundImage: bgImage, backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}>
 
             <h1 className="text-xl sm:text-2xl mb-2 lg:text-[30px] gradient-text2 font-semibold">  IMO: Initial Mining Offerings</h1>
             <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base lg:text-lg font-roboto">

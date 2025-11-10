@@ -24,6 +24,9 @@ export default function TradesPage() {
   const [showToDropdown, setShowToDropdown] = useState(false);
   const [fromAmount, setFromAmount] = useState("");
   const [toAmount, setToAmount] = useState("");
+  const [showSettings, setShowSettings] = useState(false);
+  const [slippageTolerance, setSlippageTolerance] = useState("0.1");
+  const [transactionDeadline, setTransactionDeadline] = useState("0.1");
 
   const handleFromTokenSelect = (token: typeof tokens[0]) => {
     setFromToken(token);
@@ -39,6 +42,83 @@ export default function TradesPage() {
     <AppLayout>
       <div className="p-4 sm:p-6 lg:p-8 relative">
         {/* <Image src={'/images/com.png'} alt="Background" layout="fill" objectFit="cover" className="absolute inset-0  left-0 bottom-0 w-full h-full max-w-[300px] max-h-[200px]" /> */}
+        
+        {/* Settings Modal */}
+        {showSettings && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={() => setShowSettings(false)}>
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 max-w-md w-full shadow-2xl" onClick={(e) => e.stopPropagation()}>
+              {/* Header */}
+              <div className="flex items-center justify-between mb-1">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white font-roboto">Settings</h3>
+                <button 
+                  onClick={() => setShowSettings(false)}
+                  className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all"
+                >
+                  <svg className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-6 font-inter">Trade tokens in an instant</p>
+
+              {/* Slippage Tolerance */}
+              <div className="mb-6">
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3 block font-roboto">
+                  Select Slippage tolerance
+                </label>
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => setSlippageTolerance("0.1")}
+                    className={`flex-1 py-2.5 rounded-xl font-semibold transition-all font-roboto ${
+                      slippageTolerance === "0.1"
+                        ? "bg-[#6B7FED] text-white"
+                        : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+                    }`}
+                  >
+                    0.1%
+                  </button>
+                  <button
+                    onClick={() => setSlippageTolerance("0.5")}
+                    className={`flex-1 py-2.5 rounded-xl font-semibold transition-all font-roboto ${
+                      slippageTolerance === "0.5"
+                        ? "bg-[#6B7FED] text-white"
+                        : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+                    }`}
+                  >
+                    0.5%
+                  </button>
+                  <button
+                    onClick={() => setSlippageTolerance("1")}
+                    className={`flex-1 py-2.5 rounded-xl font-semibold transition-all font-roboto ${
+                      slippageTolerance === "1"
+                        ? "bg-[#6B7FED] text-white"
+                        : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+                    }`}
+                  >
+                    1%
+                  </button>
+                </div>
+              </div>
+
+              {/* Transaction Deadline */}
+              <div>
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3 block font-roboto">
+                  Transaction deadline
+                </label>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="text"
+                    value={transactionDeadline}
+                    onChange={(e) => setTransactionDeadline(e.target.value)}
+                    className="flex-1 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white px-4 py-2.5 rounded-xl outline-none focus:ring-2 focus:ring-[#6B7FED] font-roboto font-semibold"
+                  />
+                  <span className="text-[#6B7FED] dark:text-[#8B9BFF] font-medium font-inter">Minutes</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="max-w-2xl mx-auto">
           {/* Tab Navigation */}
           <div className="flex justify-between gap-2 sm:gap-4 mb-6 sm:mb-8 overflow-x-auto max-w-[400px] m-auto p-2 rounded-full border">
@@ -90,7 +170,10 @@ export default function TradesPage() {
                 </p>
               </div>
               <div className="flex items-center gap-2">
-                <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all">
+                <button 
+                  onClick={() => setShowSettings(true)}
+                  className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all"
+                >
                   <svg className="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -249,7 +332,10 @@ export default function TradesPage() {
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all">
+                  <button 
+                    onClick={() => setShowSettings(true)}
+                    className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all"
+                  >
                     <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
