@@ -13,12 +13,15 @@ export default function VaultPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [showPlatformDropdown, setShowPlatformDropdown] = useState(false);
   const [showSortDropdown, setShowSortDropdown] = useState(false);
-  const { theme } = useTheme();
+  const { theme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Helper to check if dark mode is active (considering system theme)
+  const isDark = mounted && (theme === 'dark' || resolvedTheme === 'dark');
 
   const platformOptions = ["All", "Ethereum", "Polygon", "BSC", "Arbitrum"];
   const sortOptions = ["TVL", "Latest", "Earnings", "APY", "Multipliers"];
@@ -41,12 +44,10 @@ export default function VaultPage() {
           <div
             className="rounded-2xl p-6 text-center"
             style={{
-              background:
-                mounted && theme === "dark"
+              background: isDark
                   ? "rgba(181, 183, 238, 0.1)"
                   : "rgba(147, 150, 237, 0.1)",
-              border:
-                mounted && theme === "dark"
+              border: isDark
                   ? "1px solid rgba(181, 183, 238, 0.2)"
                   : "1px solid rgba(147, 150, 237, 0.2)",
             }}
@@ -71,8 +72,7 @@ export default function VaultPage() {
           <div
             className="inline-flex p-1 rounded-full"
             style={{
-              border:
-                mounted && theme === "dark"
+              border: isDark
                   ? "0.8px solid rgba(181, 183, 238, 0.3)"
                   : "0.8px solid #0000001A",
             }}
@@ -133,11 +133,11 @@ export default function VaultPage() {
                   className="w-full px-4 py-3 rounded-xl font-semibold text-[#9396ED] flex items-center justify-between transition-all hover:border-[#9396ED]"
                   style={{
                     background:
-                      mounted && theme === "dark"
+                      isDark
                         ? "rgba(181, 183, 238, 0.05)"
                         : "rgba(147, 150, 237, 0.05)",
                     border:
-                      mounted && theme === "dark"
+                      isDark
                         ? "1px solid rgba(181, 183, 238, 0.2)"
                         : "1px solid rgba(147, 150, 237, 0.2)",
                   }}
@@ -164,11 +164,11 @@ export default function VaultPage() {
                     className="absolute z-10 w-full mt-2 rounded-xl shadow-lg overflow-hidden"
                     style={{
                       background:
-                        mounted && theme === "dark"
+                        isDark
                           ? "rgba(30, 30, 50, 0.98)"
                           : "rgba(255, 255, 255, 0.98)",
                       border:
-                        mounted && theme === "dark"
+                        isDark
                           ? "1px solid rgba(181, 183, 238, 0.2)"
                           : "1px solid rgba(147, 150, 237, 0.2)",
                     }}
@@ -242,11 +242,11 @@ export default function VaultPage() {
                   className="w-full px-4 py-3 rounded-xl font-semibold text-[#9396ED] flex items-center justify-between transition-all hover:border-[#9396ED]"
                   style={{
                     background:
-                      mounted && theme === "dark"
+                      isDark
                         ? "rgba(181, 183, 238, 0.05)"
                         : "rgba(147, 150, 237, 0.05)",
                     border:
-                      mounted && theme === "dark"
+                      isDark
                         ? "1px solid rgba(181, 183, 238, 0.2)"
                         : "1px solid rgba(147, 150, 237, 0.2)",
                   }}
@@ -273,11 +273,11 @@ export default function VaultPage() {
                     className="absolute z-10 w-full mt-2 rounded-xl shadow-lg overflow-hidden"
                     style={{
                       background:
-                        mounted && theme === "dark"
+                        isDark
                           ? "rgba(30, 30, 50, 0.98)"
                           : "rgba(255, 255, 255, 0.98)",
                       border:
-                        mounted && theme === "dark"
+                        isDark
                           ? "1px solid rgba(181, 183, 238, 0.2)"
                           : "1px solid rgba(147, 150, 237, 0.2)",
                     }}
@@ -312,11 +312,11 @@ export default function VaultPage() {
                 className="w-full px-4 py-3 rounded-xl font-medium text-[#9396ED] placeholder-[#9396ED] placeholder-opacity-50 focus:outline-none focus:border-[#9396ED] transition-all"
                 style={{
                   background:
-                    mounted && theme === "dark"
+                    isDark
                       ? "rgba(181, 183, 238, 0.05)"
                       : "rgba(147, 150, 237, 0.05)",
                   border:
-                    mounted && theme === "dark"
+                    isDark
                       ? "1px solid rgba(181, 183, 238, 0.2)"
                       : "1px solid rgba(147, 150, 237, 0.2)",
                 }}

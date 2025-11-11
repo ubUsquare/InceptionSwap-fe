@@ -7,7 +7,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { useTheme } from "next-themes";
 
 export default function IMOPage() {
-  const { theme } = useTheme();
+  const { theme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [activeTab, setActiveTab] = useState<"next" | "past">("next");
   const [showDetails, setShowDetails] = useState(false);
@@ -16,8 +16,8 @@ export default function IMOPage() {
     setMounted(true);
   }, []);
 
-  // Background image based on theme
-  const bgImage = mounted && theme === 'dark' ? 'url(/images/dark_key.png)' : 'url(/images/second.png)';
+  // Background image based on theme (use resolvedTheme for system theme support)
+  const bgImage = mounted && (theme === 'dark' || resolvedTheme === 'dark') ? 'url(/images/dark_key.png)' : 'url(/images/second.png)';
 
   return (
     <AppLayout>

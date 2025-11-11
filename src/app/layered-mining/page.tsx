@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 
 export default function LayeredMiningPage() {
-  const { theme } = useTheme();
+  const { theme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [selectedLayer, setSelectedLayer] = useState("Layer 1");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -21,6 +21,12 @@ export default function LayeredMiningPage() {
   }, []);
 
   const layers = ["Layer 1", "Layer 2", "Layer 3", "Layer 4", "Layer 5"];
+
+  // Helper to check if dark mode is active (considering system theme)
+  const isDark = mounted && (theme === 'dark' || resolvedTheme === 'dark');
+
+  // Background image based on theme
+  const bgImage = isDark ? 'url(/images/dark_key.png)' : 'url(/images/second.png)';
 
   // Mock data for mines
   const minesData = [
@@ -43,13 +49,6 @@ export default function LayeredMiningPage() {
     // console.log(`Previous tab: ${activeTab} → New tab: ${tab}`);
     setActiveTab(tab);
   };
-
-    useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Background image based on theme
-  const bgImage = mounted && theme === 'dark' ? 'url(/images/dark_key.png)' : 'url(/images/second.png)';
 
   return (
     <AppLayout>

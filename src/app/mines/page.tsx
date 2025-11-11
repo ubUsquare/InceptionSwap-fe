@@ -9,12 +9,15 @@ import { useTheme } from "next-themes";
 export default function MinesPage() {
   const [activeTab, setActiveTab] = useState<"closed" | "live">("closed");
   const [stakedOnly, setStakedOnly] = useState(false);
-  const { theme } = useTheme();
+  const { theme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Helper to check if dark mode is active (considering system theme)
+  const isDark = mounted && (theme === 'dark' || resolvedTheme === 'dark');
 
   return (
     <AppLayout>
@@ -41,7 +44,7 @@ export default function MinesPage() {
                 </div>
                 <span className="text-[#5C69CC] font-semibold">Staked Only</span>
               </label>
-             <div className="p-1 rounded-full" style={{border: mounted && theme === 'dark' ? '0.8px solid rgba(181, 183, 238, 0.3)' : '0.8px solid #0000001A'}}>
+             <div className="p-1 rounded-full" style={{border: isDark ? '0.8px solid rgba(181, 183, 238, 0.3)' : '0.8px solid #0000001A'}}>
               {/* Closed Mines Tab */}
               <button
                 onClick={() => setActiveTab("closed")}
@@ -71,7 +74,7 @@ export default function MinesPage() {
             </div>
           </div>
 
-          <div className="h-[0.9px] mb-8" style={{backgroundColor: mounted && theme === 'dark' ? 'rgba(181, 183, 238, 0.3)' : '#D5D5D5'}}/>
+          <div className="h-[0.9px] mb-8" style={{backgroundColor: isDark ? 'rgba(181, 183, 238, 0.3)' : '#D5D5D5'}}/>
 
 
           {/* Mining Cards Grid */}

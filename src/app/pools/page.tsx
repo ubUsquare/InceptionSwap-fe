@@ -7,12 +7,15 @@ import { useEffect, useState } from "react";
 export default function PoolsPage() {
     const [activeTab, setActiveTab] = useState<"closed" | "live">("closed");
     const [stakedOnly, setStakedOnly] = useState(false);
-      const { theme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+    const { theme, resolvedTheme } = useTheme();
+    const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Helper to check if dark mode is active (considering system theme)
+  const isDark = mounted && (theme === 'dark' || resolvedTheme === 'dark');
   return (
     <AppLayout>
       <div className="p-4 sm:p-6 lg:p-8">
@@ -36,7 +39,7 @@ export default function PoolsPage() {
                 </div>
                 <span className="text-[#5C69CC] font-semibold">Staked Only</span>
               </label>
-             <div className="p-1 rounded-full" style={{border: mounted && theme === 'dark' ? '0.8px solid rgba(181, 183, 238, 0.3)' : '0.8px solid #0000001A'}}>
+             <div className="p-1 rounded-full" style={{border: isDark ? '0.8px solid rgba(181, 183, 238, 0.3)' : '0.8px solid #0000001A'}}>
               {/* Closed Mines Tab */}
               <button
                 onClick={() => setActiveTab("closed")}
@@ -71,10 +74,10 @@ export default function PoolsPage() {
           <div 
             className="rounded-2xl p-6 sm:p-8"
             style={{
-              background: mounted && theme === 'dark' 
+              background: isDark 
                 ? 'rgba(181, 183, 238, 0.1)' 
                 : 'rgba(92, 105, 204, 0.08)',
-              border: mounted && theme === 'dark'
+              border: isDark
                 ? '1px solid rgba(181, 183, 238, 0.2)'
                 : '1px solid rgba(92, 105, 204, 0.15)'
             }}
@@ -83,13 +86,13 @@ export default function PoolsPage() {
               <h3 className="text-lg font-semibold" style={{ color: '#5C69CC' }}>
                 Announcement:
               </h3>
-              <p className="text-sm sm:text-base leading-relaxed" style={{ color: mounted && theme === 'dark' ? 'rgba(181, 183, 238, 0.9)' : 'rgba(92, 105, 204, 0.85)' }}>
+              <p className="text-sm sm:text-base leading-relaxed" style={{ color: isDark ? 'rgba(181, 183, 238, 0.9)' : 'rgba(92, 105, 204, 0.85)' }}>
                 Nests will be removed and become inactive on May 29th 10:00 A.M. UTC to further reduce the inflation.
               </p>
-              <p className="text-sm sm:text-base leading-relaxed" style={{ color: mounted && theme === 'dark' ? 'rgba(181, 183, 238, 0.9)' : 'rgba(92, 105, 204, 0.85)' }}>
+              <p className="text-sm sm:text-base leading-relaxed" style={{ color: isDark ? 'rgba(181, 183, 238, 0.9)' : 'rgba(92, 105, 204, 0.85)' }}>
                 The deactivated nests can be found in the inactive page.
               </p>
-              <p className="text-sm sm:text-base font-medium leading-relaxed" style={{ color: mounted && theme === 'dark' ? 'rgba(181, 183, 238, 0.9)' : 'rgba(92, 105, 204, 0.85)' }}>
+              <p className="text-sm sm:text-base font-medium leading-relaxed" style={{ color: isDark ? 'rgba(181, 183, 238, 0.9)' : 'rgba(92, 105, 204, 0.85)' }}>
                 Further deposit will be disabled.
               </p>
             </div>

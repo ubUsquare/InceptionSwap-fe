@@ -22,16 +22,19 @@ interface MineCardProps {
 }
 
 export default function MineCard({ mine }: MineCardProps) {
-  const { theme } = useTheme();
+  const { theme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);  
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  // Helper to check if dark mode is active (considering system theme)
+  const isDark = mounted && (theme === 'dark' || resolvedTheme === 'dark');
+
   // Define styles for dark mode and light mode
-  const textColor = mounted && theme === 'dark' ? '#B5B7EE' : '#5C69CC';
-  const labelColor = mounted && theme === 'dark' ? '#B5B7EE' : '#7B8CDE';
-  const bgImage = mounted && theme === 'dark' ? `url('/images/minecards-dark.png')` : `url('/images/minecards.png')`;
+  const textColor = isDark ? '#B5B7EE' : '#5C69CC';
+  const labelColor = isDark ? '#B5B7EE' : '#7B8CDE';
+  const bgImage = isDark ? `url('/images/minecards-dark.png')` : `url('/images/minecards.png')`;
   
   return (
     <div
