@@ -14,6 +14,8 @@ export default function LayeredMiningPage() {
   const [activeTab, setActiveTab] = useState("Home");
   const [mineFilter, setMineFilter] = useState("Live Mines"); // For Genesis/Mines tabs
   const [isStakedOnly, setIsStakedOnly] = useState(false); // Toggle switch state
+  const [expandedCards, setExpandedCards] = useState<number[]>([]); // Track expanded cards
+  const [genesisCardExpanded, setGenesisCardExpanded] = useState(false); // Track Genesis card expansion
   
 
   useEffect(() => {
@@ -28,26 +30,37 @@ export default function LayeredMiningPage() {
   // Background image based on theme
   const bgImage = isDark ? 'url(/images/dark_key.png)' : 'url(/images/second.png)';
 
-  // Mock data for mines
-  const minesData = [
-    { id: 1, name: "GKEY-KEY LP", pair: "G5", apr: "0.00%", depositFee: "0%", staked: "GKEY-KEY LP", earned: "GKEY", noFees: true, badge: "60X", },
-    { id: 2, name: "GKEY-BUSD LP", pair: "G5", apr: "0.00%", depositFee: "0%", staked: "GKEY-BUSD LP", earned: "GKEY", noFees: true, badge: "60X", },
-    { id: 3, name: "YYM-BUSD LP", pair: "G5", apr: "0.00%", depositFee: "0%", staked: "YYM-BUSD LP", earned: "KEY", noFees: true, badge: "2X", },
-    { id: 4, name: "BDB-BUSD LP", pair: "G5", apr: "3.63%", depositFee: "1.5%", staked: "BDB-BUSD LP", earned: "BDB", badge: "5X", },
-    { id: 5, name: "USDT-BUSD LP", pair: "G5", apr: "4.02%", depositFee: "1.5%", staked: "USDT-BUSD LP", earned: "KEY", badge: "4X", },
-    { id: 6, name: "BTCB-BUSD LP", pair: "G5", apr: "1.96%", depositFee: "1.5%", staked: "BTCB-BUSD LP", earned: "KEY", badge: "3X", },
-    { id: 7, name: "ETH-BUSD LP", pair: "G5", apr: "14.65%", depositFee: "1.5%", staked: "ETH-BUSD LP", earned: "BUSD", badge: "6X", },
-    { id: 8, name: "USDT-BUSD LP", pair: "G5", apr: "14.65%", depositFee: "1.5%", staked: "USDT-BUSD LP", earned: "USDT", badge: "6X", },
-    { id: 9, name: "DAM-BUSD LP", pair: "G5", apr: "0.96%", depositFee: "1.5%", staked: "DAM-BUSD LP", earned: "KEY", badge: "2X", },
-    { id: 10, name: "USDC-BUSD LP", pair: "G5", apr: "8.66%", depositFee: "1.5%", staked: "USDC-BUSD LP", earned: "USDT", badge: "4X", },
-    { id: 11, name: "DOT-BNB LP", pair: "G5", apr: "0.00%", depositFee: "1.5%", staked: "DOT-BNB LP", earned: "BNB", badge: "1X", },
-    { id: 12, name: "CAKE-BUSD LP", pair: "G5", apr: "12.35%", depositFee: "1.5%", staked: "CAKE-BUSD LP", earned: "KEY", badge: "5X", },
-  ];
+  // Mock data for mines with details
+ const minesData = [
+  { id: 1, name: "GKEY-KEY LP", pair: "G5", apr: "38.06%", depositFee: "0%", staked: "GKEY-KEY LP", earned: "GKEY", noFees: true, badge: "60X", deposit: "GKEY-KEY LP", totalValue: "$1", earn: "$0" },
+  { id: 2, name: "GKEY-BUSD LP", pair: "G5", apr: "29.15%", depositFee: "0%", staked: "GKEY-BUSD LP", earned: "GKEY", noFees: true, badge: "40X", deposit: "GKEY-BUSD LP", totalValue: "$1]", earn: "$0" },
+  { id: 3, name: "TYPH-BUSD LP", pair: "G5", apr: "0%", depositFee: "0%", staked: "TYPH-BUSD LP", earned: "KEY", noFees: true, badge: "24X", deposit: "TYPH-BUSD LP", totalValue: "$3]", earn: "$0" },
+  { id: 4, name: "GKEY", pair: "G5", apr: "0.00%", depositFee: "0%", staked: "GKEY", earned: "GKEY", noFees: true, badge: "8X", deposit: "GKEY", totalValue: "$8", earn: "$0" },
+  { id: 5, name: "BUSD", pair: "G5", apr: "0.00%", depositFee: "2%", staked: "BUSD", earned: "GKEY", badge: "2X", deposit: "BUSD", totalValue: "$2,629", earn: "$0" },
+  { id: 6, name: "WBNB", pair: "G5", apr: "0.00%", depositFee: "3%", staked: "WBNB", earned: "KEY", badge: "3X", deposit: "WBNB", totalValue: "$488", earn: "$0" },
+  { id: 7, name: "USDT", pair: "G5", apr: "0.00%", depositFee: "2%", staked: "USDT", earned: "GKEY", badge: "1X", deposit: "USDT", totalValue: "$14", earn: "$0" },
+  { id: 8, name: "BTCB", pair: "G5", apr: "0.00%", depositFee: "2%", staked: "BTCB", earned: "GKEY", badge: "2X", deposit: "BTCB", totalValue: "$0", earn: "$NaN" },
+  { id: 9, name: "ETH", pair: "G5", apr: "0.00%", depositFee: "0%", staked: "ETH", earned: "GKEY", badge: "2X", deposit: "ETH", totalValue: "$0", earn: "$NaN" },
+  { id: 10, name: "DAI", pair: "G5", apr: "0.00%", depositFee: "2%", staked: "DAI", earned: "GKEY", badge: "1X", deposit: "DAI", totalValue: "$0", earn: "$NaN" },
+  { id: 11, name: "USDC", pair: "G5", apr: "0.00%", depositFee: "2%", staked: "USDC", earned: "GKEY", badge: "1X", deposit: "USDC", totalValue: "$0", earn: "$NaN" },
+  { id: 12, name: "DOT", pair: "G5", apr: "0.00%", depositFee: "2%", staked: "DOT", earned: "GKEY", badge: "2X", deposit: "DOT", totalValue: "$6", earn: "$0" },
+  { id: 13, name: "CAKE", pair: "G5", apr: "0.00%", depositFee: "2%", staked: "CAKE", earned: "GKEY", badge: "1X", deposit: "CAKE", totalValue: "$87", earn: "$0" },
+  { id: 14, name: "ADA", pair: "G5", apr: "0.00%", depositFee: "2%", staked: "ADA", earned: "GKEY", badge: "1X", deposit: "ADA", totalValue: "$0", earn: "$NaN" },
+];
+
 
   const handleTabClick = (tab: string) => {
     // console.log(`✅ Tab clicked: ${tab}`);
     // console.log(`Previous tab: ${activeTab} → New tab: ${tab}`);
     setActiveTab(tab);
+  };
+
+  const toggleCardExpansion = (cardId: number) => {
+    setExpandedCards(prev => 
+      prev.includes(cardId) 
+        ? prev.filter(id => id !== cardId)
+        : [...prev, cardId]
+    );
   };
 
   return (
@@ -272,17 +285,46 @@ export default function LayeredMiningPage() {
                       <button className="w-full golden-button text-white rounded-full py-3 font-semibold shadow-lg cursor-pointer">
                         Unlock Wallet
                       </button>
-                      {/* Mine Details Button */}
+                      
+                      {/* Show Less / Mine Details Button */}
                       <div className="bg-[white] h-[0.8px]" />
                       <button
+                        onClick={() => setGenesisCardExpanded(!genesisCardExpanded)}
                         className="w-full py-2.5 flex gap-1 items-center justify-center font-semibold text-lg transition-all hover:opacity-90"
                         style={{
                           background: "transparent",
                           color: "#ffffff",
                         }}
                       >
-                        Mine Details <ChevronDown className="w-5 h-5 text-white" />
+                        {genesisCardExpanded ? 'Show less' : 'Mine Details'}
+                        <ChevronDown className={`w-5 h-5 text-white transition-transform duration-300 ${genesisCardExpanded ? 'rotate-180' : ''}`} />
                       </button>
+
+                      {/* Expanded Details Section */}
+                      {genesisCardExpanded && (
+                        <div className="mt-4 space-y-3 pt-4 border-t border-white/20">
+                          <div className="flex justify-between items-center">
+                            <span className="text-white text-sm font-medium">Deposit:</span>
+                            <span className="text-white text-sm font-bold flex items-center gap-1">
+                              KEY
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                              </svg>
+                            </span>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <span className="text-white text-sm font-medium">Total Value:</span>
+                            <span className="text-white text-sm font-bold">$1</span>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <span className="text-white text-sm font-medium">Earn:</span>
+                            <span className="text-white text-sm font-bold">$0</span>
+                          </div>
+                          <button className="w-full bg-white/10 hover:bg-white/20 text-white rounded-lg py-2 font-medium text-sm transition-all">
+                            View on BscScan
+                          </button>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -442,17 +484,45 @@ export default function LayeredMiningPage() {
                           Unlock Wallet
                         </button>
 
-                        {/* Mine Details Button */}
+                        {/* Show Less / Mine Details Button */}
                         <div className="bg-[white] h-[0.8px]" />
                         <button
+                          onClick={() => toggleCardExpansion(mine.id)}
                           className="w-full py-2.5 flex gap-1 items-center justify-center font-semibold text-lg transition-all hover:opacity-90"
                           style={{
                             background: "transparent",
                             color: "#ffffff",
                           }}
                         >
-                          Mine Details <ChevronDown className="w-5 h-5 text-white" />
+                          {expandedCards.includes(mine.id) ? 'Show less' : 'Mine Details'} 
+                          <ChevronDown className={`w-5 h-5 text-white transition-transform duration-300 ${expandedCards.includes(mine.id) ? 'rotate-180' : ''}`} />
                         </button>
+
+                        {/* Expanded Details Section */}
+                        {expandedCards.includes(mine.id) && (
+                          <div className="mt-4 space-y-3 pt-4 border-t border-white/20">
+                            <div className="flex justify-between items-center">
+                              <span className="text-white text-sm font-medium">Deposit:</span>
+                              <span className="text-white text-sm font-bold flex items-center gap-1">
+                                {mine.deposit}
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                </svg>
+                              </span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                              <span className="text-white text-sm font-medium">Total Value:</span>
+                              <span className="text-white text-sm font-bold">{mine.totalValue}</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                              <span className="text-white text-sm font-medium">Earn:</span>
+                              <span className="text-white text-sm font-bold">{mine.earn}</span>
+                            </div>
+                            <button className="w-full bg-white/10 hover:bg-white/20 text-white rounded-lg py-2 font-medium text-sm transition-all">
+                              View on BscScan
+                            </button>
+                          </div>
+                        )}
                       </div>
                     </div>
                   ))}
@@ -462,6 +532,122 @@ export default function LayeredMiningPage() {
                   <p className="text-gray-400 dark:text-gray-500 text-lg">No closed mines available</p>
                 </div>
               )}
+            </>
+          )}
+
+          {/* House Tab Content */}
+          {activeTab === 'House' && (
+            <>
+              {/* GKEY → BUSD Info */}
+              <div className="mb-6 text-center bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm">
+                <h3 className="text-2xl font-bold text-[#5C69CC] mb-2">GKEY → BUSD</h3>
+                <p className="text-sm text-[#5C69CC] dark:text-blue-400 underline">
+                  BUSD will refill upon receiving deposit fees
+                </p>
+              </div>
+
+              {/* House Card */}
+              <div className="max-w-sm mx-auto px-2">
+                <div className="dark:from-gray-800 dark:to-gray-700 rounded-[20px] p-4 sm:p-6 shadow-lg relative overflow-hidden mine_live_bg">
+                  <div className="absolute top-4 left-4 w-24 h-24 sm:w-36 sm:h-36">
+                    <Image src="/images/icon.png" alt="Key" width={100} height={100} className="object-contain" />
+                  </div>
+                  {/* Top Right - BUSD Badge */}
+                  <div className="absolute top-4 right-4">
+                    <div className="flex flex-col">
+                      <span className="font-bold text-xs sm:text-sm" style={{ color: "#5C69CC" }}>BUSD</span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-3 mt-12 sm:mt-16">
+                    {/* Stack & Earn */}
+                    <div className="space-y-1 mb-4">
+                      <div className="flex justify-between text-xs">
+                        <span className="font-medium text-sm sm:text-lg" style={{ color: "#7B8CDE" }}>APR:</span>
+                        <span className="font-bold text-sm sm:text-lg" style={{ color: "#5C69CC" }}>0.00%</span>
+                      </div>
+                      <div className="flex justify-between text-xs">
+                        <span className="font-medium text-sm sm:text-lg" style={{ color: "#7B8CDE" }}>Stack:</span>
+                        <span className="font-bold text-sm sm:text-lg" style={{ color: "#5C69CC" }}>GKEY</span>
+                      </div>
+                      <div className="flex justify-between text-xs">
+                        <span className="font-medium text-sm sm:text-lg" style={{ color: "#7B8CDE" }}>Earn:</span>
+                        <span className="font-bold text-sm sm:text-lg" style={{ color: "#5C69CC" }}>BUSD</span>
+                      </div>
+                    </div>
+
+                    {/* Deposit Fee Section */}
+                    <div className="mb-3">
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="font-semibold text-sm sm:text-lg block" style={{ color: "#5C69CC" }}>Deposit Fee:</span>
+                        <span className="font-bold text-sm sm:text-lg block" style={{ color: "#5C69CC" }}>0%</span>
+                      </div>
+                    </div>
+
+                    {/* Keys Earned Section */}
+                    <div className="mb-3">
+                      <div className="text-sm sm:text-[16px] font-normal mb-1" style={{ color: "#5C69CC" }}>KEYS EARNED</div>
+                      <div className="flex items-center justify-between">
+                        <span className="font-bold text-xl sm:text-2xl" style={{ color: "#7B8CDE" }}>0</span>
+                        <button
+                          className="px-4 sm:px-5 py-1 rounded-lg text-white text-xs font-medium transition-all hover:opacity-90"
+                          style={{ background: "linear-gradient(93.96deg, rgba(147, 150, 237, 0.4) 2.58%, rgba(13, 161, 202, 0.4) 99.26%)" }}
+                        >
+                          Harvest
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* LP Stacked Badge */}
+                    <div className="text-xs sm:text-[14px] font-semibold mb-3" style={{ color: "#5C69CC" }}>KEY–BUSD LP STACKED</div>
+
+                    {/* Unlock Wallet Button */}
+                    <button className="w-full golden-button text-white rounded-full py-3 font-semibold shadow-lg cursor-pointer">
+                      Unlock Wallet
+                    </button>
+                    
+                    {/* Show Less / Mine Details Button */}
+                    <div className="bg-[white] h-[0.8px]" />
+                    <button
+                      onClick={() => setGenesisCardExpanded(!genesisCardExpanded)}
+                      className="w-full py-2.5 flex gap-1 items-center justify-center font-semibold text-lg transition-all hover:opacity-90"
+                      style={{
+                        background: "transparent",
+                        color: "#ffffff",
+                      }}
+                    >
+                      {genesisCardExpanded ? 'Show less' : 'Mine Details'}
+                      <ChevronDown className={`w-5 h-5 text-white transition-transform duration-300 ${genesisCardExpanded ? 'rotate-180' : ''}`} />
+                    </button>
+
+                    {/* Expanded Details Section */}
+                    {genesisCardExpanded && (
+                      <div className="mt-4 space-y-3 pt-4 border-t border-white/20">
+                        <div className="flex justify-between items-center">
+                          <span className="text-white text-sm font-medium">Deposit:</span>
+                          <span className="text-white text-sm font-bold flex items-center gap-1">
+                            GKEY
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-white text-sm font-medium">Emission Rate:</span>
+                          <span className="text-white text-sm font-bold">6 / BLOCK</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-white text-sm font-medium">Total Value:</span>
+                          <span className="text-white text-sm font-bold">$0</span>
+                        </div>
+                        <button className="w-full bg-white/10 hover:bg-white/20 text-white rounded-lg py-2 font-medium text-sm transition-all">
+                          View on BscScan
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
             </>
           )}
 

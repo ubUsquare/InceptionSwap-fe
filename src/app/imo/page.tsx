@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useTheme } from "next-themes";
+import Link from "next/link";
 
 export default function IMOPage() {
   const { theme, resolvedTheme } = useTheme();
@@ -109,6 +110,8 @@ export default function IMOPage() {
                   {/* Details Section */}
                   {showDetails && (
                     <div className="space-y-2 text-sm border-t border-gray-200 dark:border-gray-700 pt-4">
+                      <p className="text-[#9396ED] mb-2 text-center">Typhoon is a zero-knowledge protocol that enables users to send private transactions between 2 BSC wallets by utilizing zkSNARK-based cryptography. By using Typhoon to transfer funds, it is no longer possible to determine who sent the transaction in the first place, thus providing anonymity and privacy ontop of an otherwise public blockchain.</p>
+
                       <div className="flex justify-between">
                         <span className="text-gray-600 dark:text-gray-400">Launch Time:</span>
                         <span className="text-gray-900 dark:text-white font-medium">
@@ -140,12 +143,12 @@ export default function IMOPage() {
                         </span>
                       </div>
                       <div className="pt-2">
-                        <a
+                        <Link
                           href="#"
-                          className="text-[#6B7CFF] dark:text-[#8B9BFF] text-xs hover:underline"
+                          className="text-[#6B7CFF] dark:text-[#8B9BFF] text-xs hover:underline text-center block"
                         >
                           View project site
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   )}

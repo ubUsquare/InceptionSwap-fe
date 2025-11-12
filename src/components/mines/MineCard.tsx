@@ -15,6 +15,9 @@ export interface MineData {
   keysEarned: number;
   lpStacked: string;
   noFees?: boolean;
+  deposit: string;
+  totalValue: string;
+  earnValue: string;
 }
 
 interface MineCardProps {
@@ -24,6 +27,8 @@ interface MineCardProps {
 export default function MineCard({ mine }: MineCardProps) {
   const { theme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);  
+  const [isExpanded, setIsExpanded] = useState(false);
+  
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -133,15 +138,49 @@ export default function MineCard({ mine }: MineCardProps) {
         </button>
         <div className="bg-[white] h-[0.8px]" />
         <button
+          onClick={() => setIsExpanded(!isExpanded)}
           className="w-full py-2.5 flex gap-1 items-center justify-center font-semibold text-sm transition-all hover:opacity-90"
           style={{
             background: "transparent",
             color: textColor,
           }}
         >
-          Mine Details <ChevronDown className="w-5 h-5"/>
+          {isExpanded ? 'Show less' : 'Mine Details'} 
+          <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}/>
         </button>
       </div>
+
+      {/* Expanded Details Section */}
+      {isExpanded && (
+        <div className="mt-4 space-y-3 pt-4 border-t" style={{ borderColor: isDark ? 'rgba(181, 183, 238, 0.3)' : 'rgba(92, 105, 204, 0.3)' }}>
+          <div className="flex justify-between items-center">
+            <span className="text-sm font-medium" style={{ color: labelColor }}>Deposit:</span>
+            <span className="text-sm font-bold flex items-center gap-1" style={{ color: textColor }}>
+              {mine.deposit}
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-sm font-medium" style={{ color: labelColor }}>Total Value:</span>
+            <span className="text-sm font-bold" style={{ color: textColor }}>{mine.totalValue}</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-sm font-medium" style={{ color: labelColor }}>Earn:</span>
+            <span className="text-sm font-bold" style={{ color: textColor }}>{mine.earnValue}</span>
+          </div>
+          <button 
+            className="w-full rounded-lg py-2 font-medium text-sm transition-all"
+            style={{ 
+              background: isDark ? 'rgba(181, 183, 238, 0.1)' : 'rgba(92, 105, 204, 0.1)',
+              color: textColor 
+            }}
+          >
+            View on BscScan
+          </button>
+        </div>
+      )}
     </div>
   );
 }
